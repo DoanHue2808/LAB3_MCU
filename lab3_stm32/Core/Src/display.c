@@ -7,34 +7,52 @@
 
 #include "display.h"
 
-void display7SEG(int counter) {
-	/* Khoi tao mot day gom gia tri bit de hien thi cac chu so lan luot tu 0 toi 9 */
-	unsigned char disp_arr[10] = {0x40, 0x79, 0x24, 0x30, 0x19, 0x12, 0x02, 0x78, 0x00, 0x10};
-	/* Khoi tao bien "varr" chua gia tri bit 7 doan cua bien "counter" de hien thi con so can hien thi va bien "bit_var" */
-	unsigned char bit_var, varr = disp_arr[counter];
 
-	/* Doi voi tung doan segment, bien bit_var se lay gia tri bit cua segment do de hien thi den (0 -> Sang, 1 -> Tat) */
-
-	bit_var = varr & 0x01; /* Den SEG0 */
-	HAL_GPIO_WritePin(SEG0_GPIO_Port, SEG0_Pin, bit_var);
-
-	bit_var = (varr>>1) & 0x01; /* Den SEG1 */
-	HAL_GPIO_WritePin(SEG1_GPIO_Port, SEG1_Pin, bit_var);
-
-	bit_var = (varr>>2) & 0x01; /* Den SEG2 */
-	HAL_GPIO_WritePin(SEG2_GPIO_Port, SEG2_Pin, bit_var);
-
-	bit_var = (varr>>3) & 0x01; /* Den SEG3 */
-	HAL_GPIO_WritePin(SEG3_GPIO_Port, SEG3_Pin, bit_var);
-
-	bit_var = (varr>>4) & 0x01; /* Den SEG4 */
-	HAL_GPIO_WritePin(SEG4_GPIO_Port, SEG4_Pin, bit_var);
-
-	bit_var = (varr>>5) & 0x01; /* Den SEG5 */
-	HAL_GPIO_WritePin(SEG5_GPIO_Port, SEG5_Pin, bit_var);
-
-	bit_var = (varr>>6) & 0x01; /* Den SEG6 */
-	HAL_GPIO_WritePin(SEG6_GPIO_Port, SEG6_Pin, bit_var);
+void display7SEG(int num) {
+	switch (num) {
+		case 0:
+			HAL_GPIO_WritePin(GPIOB, 0B0111111, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B1000000, GPIO_PIN_SET);
+			break;
+		case 1:
+			HAL_GPIO_WritePin(GPIOB, 0B0000110, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B1111001, GPIO_PIN_SET);
+			break;
+		case 2:
+			HAL_GPIO_WritePin(GPIOB, 0B1011011, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B0100100, GPIO_PIN_SET);
+			break;
+		case 3:
+			HAL_GPIO_WritePin(GPIOB, 0B1001111, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B0110000, GPIO_PIN_SET);
+			break;
+		case 4:
+			HAL_GPIO_WritePin(GPIOB, 0B1100110, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B0011001, GPIO_PIN_SET);
+			break;
+		case 5:
+			HAL_GPIO_WritePin(GPIOB, 0B1101101, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B0010010, GPIO_PIN_SET);
+			break;
+		case 6:
+			HAL_GPIO_WritePin(GPIOB, 0B1111101, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B0000010, GPIO_PIN_SET);
+			break;
+		case 7:
+			HAL_GPIO_WritePin(GPIOB, 0B0000111, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B1111000, GPIO_PIN_SET);
+			break;
+		case 8:
+			HAL_GPIO_WritePin(GPIOB, 0B1111111, GPIO_PIN_RESET);
+			break;
+		case 9:
+			HAL_GPIO_WritePin(GPIOB, 0B1101111, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, 0B0010000, GPIO_PIN_SET);
+			break;
+		default:
+			HAL_GPIO_WritePin(GPIOB, 0B1111111, GPIO_PIN_SET);
+			break;
+	}
 }
 
 const int MAX_LED = 4;
